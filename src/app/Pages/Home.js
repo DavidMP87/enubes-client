@@ -89,6 +89,14 @@ function ResponsiveDrawer(props) {
           setEditPostId(location.state.value);
           setView("viewpost");
           break;
+        case "users":
+          //setEditPostId(location.state.value);
+          setView("users");
+          setLoading(true);
+          const userd = JSON.parse(localStorage.getItem("user"));
+          setUser(userd);
+          setLoading(false);
+          break;
       }
     }
   }, [location]);

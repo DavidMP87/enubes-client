@@ -21,6 +21,7 @@ import Switch from "@material-ui/core/Switch";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { config } from "../Config";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function createData(
   id,
@@ -282,6 +283,7 @@ export default function EnhancedTable() {
   const [loading, setLoading] = React.useState(5);
   const [rows, setRows] = useState([]);
   const [user, setUser] = useState(null);
+  let history = useHistory();
 
   useEffect(() => {
     setLoading(true);
@@ -450,11 +452,35 @@ export default function EnhancedTable() {
         if (response.status === 200) {
           setRows([]);
           getUsers();
+          get_user_data();
         }
       })
       .catch(function (error) {
         //console.log("error:", error);
       });
+  }
+
+  async function get_user_data() {
+    const urlApi = config.endpoint + "enubes/get_user_email/";
+
+    var postData = new FormData();
+    postData.append("email", user.email);
+    axios
+      .post(urlApi, postData)
+      .then(function (response) {
+        if (response.status === 200) {
+          //console.log(response.data);
+          localStorage.setItem("user", JSON.stringify(response.data.user[0]));
+          history.push({
+            pathname: "/home",
+            state: { view: "users", value: null },
+          });
+        }
+      })
+      .catch(function (error) {
+        //console.log("error:", error);
+      });
+    setLoading(false);
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
