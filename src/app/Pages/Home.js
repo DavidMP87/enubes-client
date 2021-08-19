@@ -27,6 +27,7 @@ import Users from "../Components/Users";
 import Addpost from "../Components/Addpost";
 import Editpost from "../Components/Editpost";
 import Estats from "../Components/Estats";
+import Viewpost from "../Components/Viewpost";
 import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -79,8 +80,16 @@ function ResponsiveDrawer(props) {
 
   useEffect(() => {
     if (location.state !== undefined) {
-      setEditPostId(location.state.post_id);
-      setView("edit_post");
+      switch (location.state.view) {
+        case "edit_post":
+          setEditPostId(location.state.value);
+          setView("edit_post");
+          break;
+        case "viewpost":
+          setEditPostId(location.state.value);
+          setView("viewpost");
+          break;
+      }
     }
   }, [location]);
 
@@ -200,6 +209,8 @@ function ResponsiveDrawer(props) {
         return <Editpost PostId={editPostId} />;
       case "stats":
         return <Estats />;
+      case "viewpost":
+        return <Viewpost post={editPostId} />;
       default:
         return <Posts />;
     }

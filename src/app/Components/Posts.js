@@ -148,6 +148,12 @@ export default function Posts() {
                 <Paper className={classes.paper}>
                   <Card key={value.id} className={classes.rootCard}>
                     <CardHeader
+                      onClick={() => {
+                        history.push({
+                          pathname: "/home",
+                          state: { view: "viewpost", value: value },
+                        });
+                      }}
                       avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
                           R
@@ -178,7 +184,7 @@ export default function Posts() {
                           onClick={() => {
                             history.push({
                               pathname: "/home",
-                              state: { post_id: value.id },
+                              state: { view: "edit_post", value: value.id },
                             });
                           }}
                         >
