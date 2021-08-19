@@ -28,6 +28,7 @@ import Addpost from "../Components/Addpost";
 import Editpost from "../Components/Editpost";
 import Estats from "../Components/Estats";
 import Viewpost from "../Components/Viewpost";
+import Listposts from "../Components/Listposts";
 import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -169,6 +170,19 @@ function ResponsiveDrawer(props) {
                     <ListItemText primary="Usuarios" />
                   </ListItem>
 
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    onClick={() => {
+                      setView("list_posts");
+                    }}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Noticias" />
+                  </ListItem>
+
                   {user.r_create == 1 && (
                     <ListItem
                       button
@@ -211,6 +225,8 @@ function ResponsiveDrawer(props) {
         return <Posts />;
       case "users":
         return <Users />;
+      case "list_posts":
+        return <Listposts />;
       case "add_post":
         return <Addpost />;
       case "edit_post":
